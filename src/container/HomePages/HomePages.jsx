@@ -4,6 +4,7 @@ import Header from '../../components/Commom/Header/Header';
 import Footer from '../../components/Commom/Footer/Footer';
 import NewArrival from '../../components/Home/NewArrival/NewArrival';
 import HeroBanner from '../../components/Home/HeroBanner/HeroBanner';
+import DealOfTheWeek from '../../components/Home/DealOfTheWeek/DealOfTheWeek';
 
 class HomePages extends PureComponent {
     render() {
@@ -12,7 +13,8 @@ class HomePages extends PureComponent {
                 <Header></Header>
                 <HeroBanner></HeroBanner>
                 <NewArrival></NewArrival>
-                {/* <Footer></Footer> */}
+                <DealOfTheWeek></DealOfTheWeek>
+                <Footer></Footer>
 
             </div>
         );

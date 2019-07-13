@@ -33,7 +33,7 @@ class NewArrival extends PureComponent {
                                     <div className="product-item men">
                                         <div className="product discount product_filter">
                                             <div className="product_image">
-                                                <img src="vendor/images/product_1.png" alt />
+                                                <img src="vendor/images/product_1.png" alt="" />
                                             </div>
                                             <div className="favorite favorite_left" />
                                             <div className="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
@@ -48,7 +48,7 @@ class NewArrival extends PureComponent {
                                     <div className="product-item women">
                                         <div className="product product_filter">
                                             <div className="product_image">
-                                                <img src="vendor/images/product_2.png" alt />
+                                                <img src="vendor/images/product_2.png" alt="" />
                                             </div>
                                             <div className="favorite" />
                                             <div className="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
@@ -63,7 +63,7 @@ class NewArrival extends PureComponent {
                                     <div className="product-item women">
                                         <div className="product product_filter">
                                             <div className="product_image">
-                                                <img src="vendor/images/product_3.png" alt />
+                                                <img src="vendor/images/product_3.png" alt="" />
                                             </div>
                                             <div className="favorite" />
                                             <div className="product_info">
@@ -77,7 +77,7 @@ class NewArrival extends PureComponent {
                                     <div className="product-item accessories">
                                         <div className="product product_filter">
                                             <div className="product_image">
-                                                <img src="vendor/images/product_4.png" alt />
+                                                <img src="vendor/images/product_4.png" alt="" />
                                             </div>
                                             <div className="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
                                             <div className="favorite favorite_left" />
@@ -92,7 +92,7 @@ class NewArrival extends PureComponent {
                                     <div className="product-item women men">
                                         <div className="product product_filter">
                                             <div className="product_image">
-                                                <img src="vendor/images/product_5.png" alt />
+                                                <img src="vendor/images/product_5.png" alt="" />
                                             </div>
                                             <div className="favorite" />
                                             <div className="product_info">
@@ -106,7 +106,7 @@ class NewArrival extends PureComponent {
                                     <div className="product-item accessories">
                                         <div className="product discount product_filter">
                                             <div className="product_image">
-                                                <img src="vendor/images/product_6.png" alt />
+                                                <img src="vendor/images/product_6.png" alt="" />
                                             </div>
                                             <div className="favorite favorite_left" />
                                             <div className="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
@@ -121,7 +121,7 @@ class NewArrival extends PureComponent {
                                     <div className="product-item women">
                                         <div className="product product_filter">
                                             <div className="product_image">
-                                                <img src="vendor/images/product_7.png" alt />
+                                                <img src="vendor/images/product_7.png" alt="" />
                                             </div>
                                             <div className="favorite" />
                                             <div className="product_info">
@@ -135,7 +135,7 @@ class NewArrival extends PureComponent {
                                     <div className="product-item accessories">
                                         <div className="product product_filter">
                                             <div className="product_image">
-                                                <img src="vendor/images/product_8.png" alt />
+                                                <img src="vendor/images/product_8.png" alt="" />
                                             </div>
                                             <div className="favorite" />
                                             <div className="product_info">
@@ -149,7 +149,7 @@ class NewArrival extends PureComponent {
                                     <div className="product-item men">
                                         <div className="product product_filter">
                                             <div className="product_image">
-                                                <img src="vendor/images/product_9.png" alt />
+                                                <img src="vendor/images/product_9.png" alt="" />
                                             </div>
                                             <div className="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
                                             <div className="favorite favorite_left" />
@@ -164,7 +164,7 @@ class NewArrival extends PureComponent {
                                     <div className="product-item men">
                                         <div className="product product_filter">
                                             <div className="product_image">
-                                                <img src="vendor/images/product_10.png" alt />
+                                                <img src="vendor/images/product_10.png" alt="" />
                                             </div>
                                             <div className="favorite" />
                                             <div className="product_info">
