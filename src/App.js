@@ -1,9 +1,13 @@
 import React from 'react';
+import Pages from './container/Pages/Pages';
 import HomePages from './container/HomePages/HomePages';
 
 function App() {
   return (
-    <HomePages></HomePages>
+    <div>
+      <Pages></Pages>
+      {/* <HomePages></HomePages> */}
+    </div>
   );
 }
 

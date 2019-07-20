@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import HomePages from './../../../container/HomePages/HomePages';
+import CartPages from './../../../container/CartPages/CartPages';
 
 class Header extends PureComponent {
     render() {
         return (
             <div>
                 <header className="header trans_300">
-                    {/* Top Navigation */}
                     <div className="top_nav">
                         <div className="container">
                             <div className="row">
@@ -16,7 +18,6 @@ class Header extends PureComponent {
                                 <div className="col-md-6 text-right">
                                     <div className="top_nav_right">
                                         <ul className="top_nav_menu">
-                                            {/* Currency / Language / My Account */}
                                             <li className="language">
                                                 <a href="#">
                                                     English
@@ -45,21 +46,19 @@ class Header extends PureComponent {
                             </div>
                         </div>
                     </div>
-                    {/* Main Navigation */}
+
                     <div className="main_nav_container">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12 text-right">
                                     <div className="logo_container">
-                                        <a href="#">Nordic<span>Shop</span></a>
+                                        <Link to="/">Book<span>Shop</span></Link>
                                     </div>
                                     <nav className="navbar">
                                         <ul className="navbar_menu">
-                                            <li><a href="#">home</a></li>
-                                            <li><a href="categories.html">shop</a></li>
-                                            <li><a href="#">promotion</a></li>
-                                            <li><a href="https://nordiccoder.com/blog" target="blank">blog</a></li>
-                                            <li><a href="contact.html">contact</a></li>
+
+                                            <li><Link to="/">home</Link></li>
+                                            <li><Link to="/cart">Cart</Link></li>
                                         </ul>
                                         <ul className="navbar_user">
                                             {/* <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li> */}
