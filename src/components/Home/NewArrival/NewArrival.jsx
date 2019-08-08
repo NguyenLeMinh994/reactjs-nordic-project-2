@@ -1,7 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getCategories } from './../../../actions/category';
 
 class NewArrival extends PureComponent {
+    constructor(props) {
+        super(props);
+        
+    }
+    
+    componentDidMount() {
+        console.log(this.props.getCategories());
+        
+    }
     render() {
         return (
             <div>
@@ -42,7 +54,7 @@ class NewArrival extends PureComponent {
                                                 <div className="product_price">$520.00<span>$590.00</span></div>
                                             </div>
                                         </div>
-                                        <div className="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+                                        <div className="red_button add_to_cart_button"><a href="">add to cart</a></div>
                                     </div>
                                     {/* Product 2 */}
                                     <div className="product-item women">
@@ -190,4 +202,15 @@ NewArrival.propTypes = {
 
 };
 
-export default NewArrival;
+const mapStateToProps = state => ({
+    categories: state.category.list,
+    statusCategory: state.category.status,
+
+});
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        getCategories
+    }, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(NewArrival);

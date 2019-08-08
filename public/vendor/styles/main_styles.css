@@ -1004,6 +1004,8 @@ section
 {
 	width: 100%;
 	margin-top: 57px;
+	display: flex;
+	flex-flow: wrap;
 }
 .product-item
 {

@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
 
 class DealOfTheWeek extends PureComponent {
     render() {
@@ -37,7 +39,7 @@ class DealOfTheWeek extends PureComponent {
                                             <div className="timer_unit">Sec</div>
                                         </li>
                                     </ul>
-                                    <div className="red_button deal_ofthe_week_button"><a href="#">shop now</a></div>
+                                    <div className="red_button deal_ofthe_week_button"><Link to="/cart">Cart now</Link></div>
                                 </div>
                             </div>
                         </div>

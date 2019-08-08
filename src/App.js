@@ -1,14 +1,24 @@
-import React from 'react';
-import Pages from './container/Pages/Pages';
-import HomePages from './container/HomePages/HomePages';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
 
-function App() {
-  return (
-    <div>
-      <Pages></Pages>
-      {/* <HomePages></HomePages> */}
-    </div>
-  );
+import Pages from './container/Pages/Pages';
+import store from './store/store';
+
+class App extends PureComponent {
+  render() {
+    return (
+
+      <Provider store={store}>
+        <Pages />
+      </Provider>
+
+    );
+  }
 }
+
+App.propTypes = {
+
+};
 
 export default App;
