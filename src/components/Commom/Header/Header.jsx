@@ -1,13 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import HomePages from './../../../container/HomePages/HomePages';
-import CartPages from './../../../container/CartPages/CartPages';
+import {Link } from 'react-router-dom';
 
 class Header extends PureComponent {
     render() {
         return (
             <div>
+            
                 <header className="header trans_300">
                     <div className="top_nav">
                         <div className="container">

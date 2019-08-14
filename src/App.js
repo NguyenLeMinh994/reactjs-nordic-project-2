@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 
 import Pages from './container/Pages/Pages';
@@ -17,8 +16,6 @@ class App extends PureComponent {
   }
 }
 
-App.propTypes = {
 
-};
 
 export default App;

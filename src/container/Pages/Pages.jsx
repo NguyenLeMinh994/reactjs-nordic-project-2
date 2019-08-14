@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HomePages from './../HomePages/HomePages';
-import CartPages from './../CartPages/CartPages';
 import Header from './../../components/Commom/Header/Header';
 import Footer from './../../components/Commom/Footer/Footer';
+import DetailPages from './../DetailPages/DetailPages';
+
 
 class Pages extends PureComponent {
     render() {
@@ -13,10 +13,9 @@ class Pages extends PureComponent {
             <Router>
                 <div className="super_container">
                     <Header></Header>
-                    
                     <Switch>
                         <Route exact path="/" component={HomePages}></Route>
-                        <Route path="/cart" component={CartPages}></Route>
+                        <Route exact path="/detail/:id" component={DetailPages}></Route>
                     </Switch>
                     <Footer></Footer>
                 </div>
@@ -26,8 +25,6 @@ class Pages extends PureComponent {
     }
 }
 
-Pages.propTypes = {
 
-};
 
 export default Pages;
