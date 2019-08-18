@@ -1,7 +1,4 @@
 export const ActionType = {
-    // CATEGORY
-    GET_CATEGORIES:'GET_CATEGORIES',
-    GET_PRODUCTS_FROM_CATEGORY:'GET_PRODUCTS_FROM_CATEGORY',
-
-    //PRODUCT
+    // Cart
+    ADD_TO_CART:'ADD_TO_CART',
 };

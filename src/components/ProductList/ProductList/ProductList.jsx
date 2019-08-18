@@ -22,10 +22,8 @@ class ProductList extends PureComponent {
 
     renderProductList=()=>{
         const {productList} =this.state;
-        if (productList)
+        if (productList.length>0)
         {
-            console.log(productList);
-            
             return productList.map((product)=>{
                 return <Product key={product.id} product={product} />
             });
