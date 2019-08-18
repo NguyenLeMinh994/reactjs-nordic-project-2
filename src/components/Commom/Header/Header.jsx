@@ -57,6 +57,7 @@ class Header extends PureComponent {
                                         <ul className="navbar_menu">
 
                                             <li><Link to="/">home</Link></li>
+                                            <li><Link to="/shop">Shop</Link></li>
                                             <li><Link to="/cart">Cart</Link></li>
                                         </ul>
                                         <ul className="navbar_user">

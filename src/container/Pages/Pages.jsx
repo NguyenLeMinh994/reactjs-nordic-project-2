@@ -4,6 +4,7 @@ import HomePages from './../HomePages/HomePages';
 import Header from './../../components/Commom/Header/Header';
 import Footer from './../../components/Commom/Footer/Footer';
 import DetailPages from './../DetailPages/DetailPages';
+import ProductListPages from './../ProductListPages/ProductListPages';
 
 
 class Pages extends PureComponent {
@@ -15,7 +16,8 @@ class Pages extends PureComponent {
                     <Header></Header>
                     <Switch>
                         <Route exact path="/" component={HomePages}></Route>
-                        <Route exact path="/detail/:id" component={DetailPages}></Route>
+                        <Route path="/detail/:id" component={DetailPages}></Route>
+                        <Route path="/shop" component={ProductListPages}></Route>
                     </Switch>
                     <Footer></Footer>
                 </div>

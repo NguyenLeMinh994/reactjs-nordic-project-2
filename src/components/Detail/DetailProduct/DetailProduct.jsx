@@ -85,7 +85,6 @@ class DetailProduct extends PureComponent {
                                         <div className="single_product_thumbnails">
                                             <ul>
                                                 {this.renderthumbnails()}
-
                                             </ul>
                                         </div>
                                     </div>
