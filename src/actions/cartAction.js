@@ -1,12 +1,18 @@
 import { ActionType } from './actionType';
 
-const addToCart=(product)=>{
+export const addToCart=(product,qty)=>{
     return {
         type: ActionType.ADD_TO_CART,
-        payload: product,
+        payload: {
+            product,
+            qty
+        }
     }
 }
 
-export default {
-    addToCart,
+export const removeItemInCart = (product)=>{
+    return{
+        type:ActionType.REMOVE_ITEM_IN_CART,
+        payload:product,
+    }
 }

@@ -1,8 +1,25 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import {Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
 class Header extends PureComponent {
+    constructor(props) {
+        super(props);
+    }
+
+    renderQtyInCart = () => {
+        const {
+            cart
+        } = this.props;
+        let qty = 0;
+        if (cart.length > 0) {
+            qty = cart.reduce((preValue, item) => {
+                return preValue + item.qty;
+            }, 0)
+        }
+        return qty;
+    }
     render() {
         return (
             <div>
@@ -66,7 +83,9 @@ class Header extends PureComponent {
                                             <li className="checkout">
                                                 <a href="#">
                                                     <i className="fa fa-shopping-cart" aria-hidden="true" />
-                                                    <span id="checkout_items" className="checkout_items">2</span>
+                                                    <span id="checkout_items" className="checkout_items">
+                                                    {this.renderQtyInCart()}
+                                                    </span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -139,4 +158,14 @@ Header.propTypes = {
 
 };
 
-export default Header;
+const mapStateToProps = state => {
+    return {
+        cart: state.cart,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+    }, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
