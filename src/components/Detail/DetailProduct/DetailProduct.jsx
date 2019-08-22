@@ -6,6 +6,9 @@ import PropTypes from 'prop-types';
 
 import productApi from './../../../api/productApi';
 import Thumbnail from './../Thumbnail/Thumbnail';
+import { bindActionCreators } from "C:/Users/Minh/AppData/Local/Microsoft/TypeScript/3.5/node_modules/redux";
+import { addToCart } from './../../../actions/cartAction';
+import { connect } from 'react-redux';
 
 class DetailProduct extends PureComponent {
 
@@ -15,6 +18,7 @@ class DetailProduct extends PureComponent {
             product: {},
             statusThumbnail: '',
             thumbnailList: [],
+            qty:1,
         }
     }
 
@@ -27,7 +31,6 @@ class DetailProduct extends PureComponent {
 
             this.setState(() => {
                 const thumbnailList = product.body.thumbnails;
-                console.log("A", thumbnailList);
 
                 thumbnailList.unshift(product.body.thumbnail);
                 return {
@@ -50,7 +53,32 @@ class DetailProduct extends PureComponent {
             }
         });
     }
+    handleIncrease=()=>{
+        console.log('handleIncrease');
+        this.setState(prevState=>{
+            const qty = prevState.qty+1;
+            return {
+                ...prevState,
+                qty,
+            }
+        });
+        
+    }
+    handleDecrease=()=>{
+        console.log('handleDecrease');
+        this.setState(prevState => {
+            if (prevState.qty>1)
+            {
+                const qty = prevState.qty - 1;
 
+                return {
+                    ...prevState,
+                    qty,
+                }
+            }
+        });
+
+    }
     renderthumbnails = () => {
 
         const { statusThumbnail, thumbnailList } = this.state;
@@ -61,12 +89,17 @@ class DetailProduct extends PureComponent {
             });
         }
     }
+
+    onAddToCart = (product,e) => {
+        e.preventDefault();
+        const { qty } = this.state;
+        this.props.addToCart(product, qty)
+    }
     render() {
-        const { product, statusThumbnail } = this.state;
+        const { product, statusThumbnail,qty } = this.state;
 
         return (
-            <div>
-                <div className="container single_product_container">
+                <div className="container product_section_container">
                     <div className="row">
                         <div className="col">
                             <div className="breadcrumbs d-flex flex-row align-items-center">
@@ -77,6 +110,7 @@ class DetailProduct extends PureComponent {
                             </div>
                         </div>
                     </div>
+
                     <div className="row">
                         <div className="col-lg-7">
                             <div className="single_product_pics">
@@ -109,19 +143,20 @@ class DetailProduct extends PureComponent {
                                 <div className="quantity d-flex flex-column flex-sm-row align-items-sm-center">
                                     <span>Quantity:</span>
                                     <div className="quantity_selector">
-                                        <span className="minus"><i className="fa fa-minus" aria-hidden="true" /></span>
-                                        <span id="quantity_value">1</span>
-                                        <span className="plus"><i className="fa fa-plus" aria-hidden="true" /></span>
+                                        <span className="minus" onClick={this.handleDecrease}><i className="fa fa-minus" aria-hidden="true" /></span>
+                                        <span id="quantity_value">{ qty }</span>
+                                        <span className="plus" onClick={this.handleIncrease}><i className="fa fa-plus" aria-hidden="true" /></span>
                                     </div>
                                     <div className="red_button"
-                                        style={{ width: '160px', marginLeft: '13px', fontSize: '12px' }}><a href="#">add to cart</a></div>
+                                        style={{ width: '160px', marginLeft: '13px', fontSize: '12px' }}><a href="#" onClick={
+                                            (e)=>this.onAddToCart(product,e)
+                                        }>add to cart</a></div>
                                     <div className="product_favorite d-flex flex-column align-items-center justify-content-center" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
         );
     }
@@ -130,6 +165,15 @@ DetailProduct.propTypes = {
     match: PropTypes.object.isRequired,
 }
 
+const mapStateToProps = state => {
+    return {}
+}
 
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        addToCart
+    }, dispatch);
+}
 
-export default DetailProduct;
+export default connect(mapStateToProps,
+    mapDispatchToProps)(DetailProduct);

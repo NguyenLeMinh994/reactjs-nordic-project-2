@@ -7,7 +7,6 @@ import { addToCart } from "../../../actions/cartAction";
 class Product extends PureComponent {
 
     onAddToCart=(product)=>{
-        // console.log('product ',product);
         this.props.addToCart(product,1);
     }
     render() {

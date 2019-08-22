@@ -1,18 +1,13 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import CartList from './../../components/Cart/CartList/CartList';
 
 class CartPages extends PureComponent {
     render() {
         return (
-            <div>
-                <h1>Cart Detail</h1>
-            </div>
+            <CartList />
         );
     }
 }
 
-CartPages.propTypes = {
-
-};
 
 export default CartPages;

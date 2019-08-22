@@ -5,7 +5,7 @@ import Header from './../../components/Commom/Header/Header';
 import Footer from './../../components/Commom/Footer/Footer';
 import DetailPages from './../DetailPages/DetailPages';
 import ProductListPages from './../ProductListPages/ProductListPages';
-
+import CartPages from './../CartPages/CartPages';
 
 class Pages extends PureComponent {
     render() {
@@ -18,6 +18,7 @@ class Pages extends PureComponent {
                         <Route exact path="/" component={HomePages}></Route>
                         <Route path="/detail/:id" component={DetailPages}></Route>
                         <Route path="/shop" component={ProductListPages}></Route>
+                        <Route path="/cart" component={CartPages}></Route>
                     </Switch>
                     <Footer></Footer>
                 </div>
@@ -26,7 +27,5 @@ class Pages extends PureComponent {
         );
     }
 }
-
-
 
 export default Pages;
