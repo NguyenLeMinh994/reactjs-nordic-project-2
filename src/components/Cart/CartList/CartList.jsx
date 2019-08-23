@@ -3,25 +3,25 @@ import "./css/style.css";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CartItem from './../CartItem/CartItem';
-import { removeItemInCart } from "../../../actions/cartAction";
+import { removeItemInCart, updateCartItem } from "../../../actions/cartAction";
 class CartList extends PureComponent {
-
-    constructor(props) {
-        super(props);
-    }
 
     renderCartItemList = () => {
         const { cart } = this.props;
         if (cart.length > 0) {
             return cart.map((cart, index) => {
                 return (
-                    <CartItem key={index} product={cart.product} qty={cart.qty} removeCartItem={this.removeCartItem} />
+                    <CartItem key={index} product={cart.product} qty={cart.qty} 
+                        removeCartItem={this.removeCartItem}  
+                        handleIncrease={this.handleIncrease}
+                        handleDecrease={this.handleDecrease}
+                    />
                 );
             });
         }
         return (
             <div className="h-100 row justify-content-center align-items-center">
-                <h1 >No Cart</h1>
+                <h1 >Cart is empty</h1>
 
             </div>
         )
@@ -40,6 +40,16 @@ class CartList extends PureComponent {
         }
         return 0;
     }
+
+    handleIncrease=(product,qty)=>{
+        this.props.updateCartItem(product, qty);
+    }
+    handleDecrease = (product, qty) => {
+        if (qty > 0) {
+            this.props.updateCartItem(product, qty);
+        }
+    }
+
     render() {
         return (
             <div className="container single_product_container" style={{ marginTop: '190px' }}>
@@ -73,6 +83,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         removeItemInCart,
+        updateCartItem,
     }, dispatch);
 }
 

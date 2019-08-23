@@ -54,9 +54,8 @@ class DetailProduct extends PureComponent {
         });
     }
     handleIncrease=()=>{
-        console.log('handleIncrease');
-        this.setState(prevState=>{
-            const qty = prevState.qty+1;
+        this.setState(prevState => {
+            const qty = prevState.qty + 1;
             return {
                 ...prevState,
                 qty,
@@ -65,10 +64,8 @@ class DetailProduct extends PureComponent {
         
     }
     handleDecrease=()=>{
-        console.log('handleDecrease');
         this.setState(prevState => {
-            if (prevState.qty>1)
-            {
+            if (prevState.qty > 1) {
                 const qty = prevState.qty - 1;
 
                 return {

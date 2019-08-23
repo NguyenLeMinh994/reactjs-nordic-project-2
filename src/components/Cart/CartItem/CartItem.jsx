@@ -1,13 +1,9 @@
 import React, { PureComponent } from 'react';
 
 class CartItem extends PureComponent {
-    constructor(props) {
-        super(props);
-        
-    }
 
     render() {
-        const { product, qty, removeCartItem } = this.props;
+        const { product, qty, removeCartItem, handleIncrease, handleDecrease } = this.props;
         
         return (
             <div>
@@ -27,9 +23,10 @@ class CartItem extends PureComponent {
                         <h6><strong>{product.salePrice * qty} <span className="text-muted">x</span></strong></h6>
                     </div>
                     <div className="col-4 col-sm-4 col-md-4">
-                        <div className="quantity" style={{ marginTop: '0px' }}>
-                            <input type="number" step={1} max={99} min={1} defaultValue={qty} title="Qty"
-                                className="qty" size={4} />
+                        <div className="quantity" style={{ marginTop: '0px'}}>
+                                <input type="button" value="+" className="plus" onClick={() => handleIncrease(product,qty + 1)} />
+                                <p className="qty" style={{ marginTop: '10px', marginRight:'45px' }}> {qty} </p>
+                                <input type="button" value="-" className="minus" onClick={() => handleDecrease(product, qty - 1)} />
                         </div>
                     </div>
                     <div className="col-2 col-sm-2 col-md-2 text-right">

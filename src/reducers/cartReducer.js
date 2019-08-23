@@ -3,7 +3,7 @@ import { ActionType } from '../actions/actionType';
 let data = JSON.parse(localStorage.getItem('CART'));
 const initialState = data ? data : [];
 
-const productReducer = (state = initialState,action)=>{
+const productReducer = (state = initialState, action) => {
     switch (action.type) {
         case ActionType.ADD_TO_CART: {
             const {
@@ -24,7 +24,7 @@ const productReducer = (state = initialState,action)=>{
                     newProduct
                 );
             }
-            localStorage.setItem('CART',JSON.stringify(state));
+            localStorage.setItem('CART', JSON.stringify(state));
             return [...state];
         }
 
@@ -40,6 +40,19 @@ const productReducer = (state = initialState,action)=>{
             return [...state];
         }
 
+        case ActionType.UPDATE_CART_ITEM: {
+            const {
+                product,
+                qty
+            } = action.payload;
+            const index = findProductInCart(state, product)
+            if (index !== -1) {
+                state[index].qty = qty;
+            }
+            localStorage.setItem('CART', JSON.stringify(state));
+            return [...state];
+        }
+
         default:
             return [...state];
 
@@ -47,12 +60,12 @@ const productReducer = (state = initialState,action)=>{
 
 };
 
-const findProductInCart=(carts,product)=>{
+const findProductInCart = (carts, product) => {
     let index = -1;
-    if(carts.length > 0){
+    if (carts.length > 0) {
 
         index = carts.findIndex(cart => cart.product.id === product.id);
-        
+
     }
     return index;
 };

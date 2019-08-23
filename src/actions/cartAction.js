@@ -16,3 +16,10 @@ export const removeItemInCart = (product)=>{
         payload:{product,}
     }
 }
+
+export const updateCartItem = (product,qty) => {
+    return {
+        type: ActionType.UPDATE_CART_ITEM,
+        payload: { product, qty },
+    }
+}
