@@ -24,7 +24,7 @@ class Product extends PureComponent {
                         <div className="product_price">${product.salePrice}<span>${product.originalPrice}</span></div>
                     </div>
                 </div>
-                <div className="red_button add_to_cart_button" 
+                <div className="red_button add_to_cart_button"
                 style={{ margin: '0' }}>
                     <a onClick={() => this.onAddToCart(product)}
                 >add to cart</a></div>

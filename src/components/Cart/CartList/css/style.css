@@ -21,7 +21,7 @@
     background-color: #F6F6F6
 }
 
-.quantity input.qty {
+.quantity .qty {
     position: relative;
     border: 0;
     width: 100%;
@@ -34,8 +34,8 @@
     background-clip: padding-box
 }
 
-.quantity .minus,
-.quantity .plus {
+.quantity .cart_plus,
+.quantity .cart_minus {
     line-height: 0;
     background-clip: padding-box;
     -webkit-border-radius: 0;
@@ -54,12 +54,12 @@
     z-index: 3
 }
 
-.quantity .minus:hover,
-.quantity .plus:hover {
+.quantity .cart_plus:hover,
+.quantity .cart_minus:hover {
     background-color: #dad8da
 }
 
-.quantity .minus {
+.quantity .cart_minus {
     bottom: 0
 }
 

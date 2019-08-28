@@ -24,9 +24,9 @@ class CartItem extends PureComponent {
                     </div>
                     <div className="col-4 col-sm-4 col-md-4">
                         <div className="quantity" style={{ marginTop: '0px'}}>
-                                <input type="button" value="+" className="plus" onClick={() => handleIncrease(product,qty + 1)} />
-                                <p className="qty" style={{ marginTop: '10px', marginRight:'45px' }}> {qty} </p>
-                                <input type="button" value="-" className="minus" onClick={() => handleDecrease(product, qty - 1)} />
+                                <input type="button" value="+" className="cart_plus" onClick={() => handleIncrease(product,qty + 1)} />
+                                <p className="qty" style={{marginRight:'45px' }}> {qty} </p>
+                                <input type="button" value="-" className="cart_minus" onClick={() => handleDecrease(product, qty - 1)} />
                         </div>
                     </div>
                     <div className="col-2 col-sm-2 col-md-2 text-right">
