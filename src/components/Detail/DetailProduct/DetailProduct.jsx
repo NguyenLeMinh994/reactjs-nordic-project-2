@@ -137,19 +137,20 @@ class DetailProduct extends PureComponent {
                                 <div className="original_price">${product.originalPrice}</div>
                                 <div className="product_price">${product.salePrice}</div>
 
-                                <div className="quantity d-flex flex-column flex-sm-row align-items-sm-center">
-                                    <span>Quantity:</span>
-                                    <div className="quantity_selector">
-                                        <span className="minus" onClick={this.handleDecrease}><i className="fa fa-minus" aria-hidden="true" /></span>
-                                        <span id="quantity_value">{ qty }</span>
-                                        <span className="plus" onClick={this.handleIncrease}><i className="fa fa-plus" aria-hidden="true" /></span>
-                                    </div>
-                                    <div className="red_button"
-                                        style={{ width: '160px', marginLeft: '13px', fontSize: '12px' }}><a href="#" onClick={
-                                            (e)=>this.onAddToCart(product,e)
-                                        }>add to cart</a></div>
-                                    <div className="product_favorite d-flex flex-column align-items-center justify-content-center" />
+                            <div className="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+                                <span>Quantity:</span>
+                                <div className="quantity_selector">
+                                    <span className="minus" onClick={this.handleDecrease}><i className="fa fa-minus" aria-hidden="true" /></span>
+                                    <span id="quantity_value">{qty}</span>
+                                    <span className="plus" onClick={this.handleIncrease}><i className="fa fa-plus" aria-hidden="true" /></span>
                                 </div>
+                                <div className="red_button"
+                                    style={{ width: '160px', marginLeft: '13px', fontSize: '12px' }}><a href="#" onClick={
+                                        (e) => this.onAddToCart(product, e)
+                                    }>add to cart</a></div>
+                                <div className="product_favorite d-flex flex-column align-items-center justify-content-center" />
+                            </div>
+                            
                             </div>
                         </div>
                     </div>

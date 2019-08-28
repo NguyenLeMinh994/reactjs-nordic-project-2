@@ -12,6 +12,7 @@ class NewArrival extends PureComponent {
             products: [],
             categories: [],
             statusCategory: '0',
+            
         }
     }
 
@@ -28,13 +29,14 @@ class NewArrival extends PureComponent {
             this.setState(prevState => {
                 return {
                     products: products.body,
-                    categories: categoryItems
+                    categories: categoryItems,
+                    loading:true,
                 }
             });
         } catch (error) {
             console.error(error);
             
-        }
+        } 
         
     }
 
@@ -71,16 +73,22 @@ class NewArrival extends PureComponent {
         });
     }
 
+  
     renderProductItems = () =>{
         const { products } = this.state;
-        return products.map(product=>{
-            return <Product key={product.id} product={product} />;
-        });
+        if (products.length>0){
+            return products.map(product => {
+                return <Product key={product.id} product={product} />;
+            });
+        }else{
+            return (<h3>Loading ....</h3>);
+        }
+       
 
     }
+
+   
     render() {
-
-
         return (
             <div>
                 <div className="new_arrivals">

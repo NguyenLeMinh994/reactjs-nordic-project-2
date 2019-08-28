@@ -3,20 +3,27 @@ import './css/categories_styles.css';
 import './css/categories_responsive.css';
 import productApi from './../../../api/productApi';
 import Product from '../Product/Product';
+import { async } from 'q';
 
 class ProductList extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             productList:[],
+            order:{
+                orderName:'Default Sorting',
+                orderSort:''
+            },
+            skip:0,
+            limit:4,
         }
     }
 
     async componentDidMount() {
 
-        const productList = await productApi.getAll();
+        const product = await productApi.getAll();
         this.setState({
-            productList: productList.body,
+            productList: product.body,
         })
     }
 
@@ -28,9 +35,90 @@ class ProductList extends PureComponent {
                 return <Product key={product.id} product={product} />
             });
         }
+        else{
+            return (<h3>Loading ...</h3>);
+        }
+    }
+    showProduct= async (limitNumber)=>{
+       
+        
+        try {
+            const { order, skip } = this.state;
+
+            const filter = {
+                limit: limitNumber,
+                skip,
+                order: order.orderSort,
+            };
+            const params = {
+                filter: JSON.stringify(filter),
+            };
+            const product = await productApi.getAll(params);
+            console.log(product);
+            
+            this.setState({
+                productList: product.body,
+                limit: limitNumber
+            })
+        } catch (error) {
+            
+        }
+    }
+    handleChangeOption = async (chooseOption) => {
+        try {
+            let orderSort;
+            switch (chooseOption) {
+                case "Price From Low To High":
+                    orderSort ='salePrice desc';
+                    break;
+                case "Price From High To Low":
+                    orderSort = 'salePrice asc';
+                    break;
+                case "Name From A To Z":
+                    orderSort ='name desc';
+                    break;
+                case "Name From Z To A":
+                    orderSort = 'name asc';
+                    break;
+            
+                default:
+                    orderSort = '';
+                    break;
+            }
+            const {skip, limit } = this.state;
+            
+            const filter = {
+                limit,
+                skip,
+                order: orderSort,
+            };
+            const params = {
+                filter: JSON.stringify(filter),
+            };
+            const product = await productApi.getAll(params);
+            
+            this.setState(prevState => {
+                const newOrder = {
+                    ...prevState.order,
+                    orderName: chooseOption,
+                    orderSort,
+                }
+                return {
+                    order: newOrder,
+                    productList: product.body,
+                }
+            })
+            
+        } catch (error) {
+            
+        }
+        
     }
 
+
     render() {
+        const { order,limit }=this.state;
+        
         return (
             <div>
                 <div className="container product_section_container">
@@ -61,23 +149,25 @@ class ProductList extends PureComponent {
                                         <div className="col">
                                             <div className="product_sorting_container product_sorting_container_top">
                                                 <ul className="product_sorting">
-                                                    <li>
-                                                        <span className="type_sorting_text">Default Sorting</span>
+                                                    <li style={{width:"200px"}}>
+                                                        <span className="type_sorting_text">{order.orderName}</span>
                                                         <i className="fa fa-angle-down" />
                                                         <ul className="sorting_type">
-                                                            <li className="type_sorting_btn" data-isotope-option="{ &quot;sortBy&quot;: &quot;original-order&quot; }"><span>Default Sorting</span></li>
-                                                            <li className="type_sorting_btn" data-isotope-option="{ &quot;sortBy&quot;: &quot;price&quot; }"><span>Price</span></li>
-                                                            <li className="type_sorting_btn" data-isotope-option="{ &quot;sortBy&quot;: &quot;name&quot; }"><span>Product Name</span></li>
+                                                            <li className="type_sorting_btn" onClick={() =>this.handleChangeOption('Default Sorting')}><span>Default Sorting</span></li>
+                                                            <li className="type_sorting_btn" onClick={() => this.handleChangeOption('Price From Low To High')}><span>Price From Low To High</span></li>
+                                                            <li className="type_sorting_btn" onClick={() => this.handleChangeOption('Price From High To Low')}><span>Price From High To Low</span></li>
+                                                            <li className="type_sorting_btn" onClick={() => this.handleChangeOption('Name From A To Z')}><span>Name From A To Z</span></li>
+                                                            <li className="type_sorting_btn" onClick={() => this.handleChangeOption('Name From Z To A')}><span>Name From Z To A</span></li>
                                                         </ul>
                                                     </li>
                                                     <li>
                                                         <span>Show</span>
-                                                        <span className="num_sorting_text">6</span>
+                                                        <span className="num_sorting_text">{limit}</span>
                                                         <i className="fa fa-angle-down" />
                                                         <ul className="sorting_num">
-                                                            <li className="num_sorting_btn"><span>6</span></li>
-                                                            <li className="num_sorting_btn"><span>12</span></li>
-                                                            <li className="num_sorting_btn"><span>24</span></li>
+                                                            <li className="num_sorting_btn" ><span onClick={() => this.showProduct(4)}>4</span></li>
+                                                            <li className="num_sorting_btn" ><span onClick={() => this.showProduct(8)}>8</span></li>
+                                                            <li className="num_sorting_btn" ><span onClick={() => this.showProduct(12)}>12</span></li>
                                                         </ul>
                                                     </li>
                                                 </ul>
@@ -91,29 +181,14 @@ class ProductList extends PureComponent {
                                                         </ul>
                                                     </div>
                                                     <div className="page_total"><span>of</span> 3</div>
-                                                    <div id="next_page" className="page_next"><a href="#"><i className="fa fa-long-arrow-right" aria-hidden="true" /></a></div>
+                                                    
                                                 </div>
                                             </div>
                                             <div className="product-grid">
-                                                {/*  */}
                                                 {this.renderProductList()}
                                             </div>
-                                            {/* Product Sorting */}
                                             <div className="product_sorting_container product_sorting_container_bottom clearfix">
-                                                <ul className="product_sorting">
-                                                    <li>
-                                                        <span>Show:</span>
-                                                        <span className="num_sorting_text">04</span>
-                                                        <i className="fa fa-angle-down" />
-                                                        <ul className="sorting_num">
-                                                            <li className="num_sorting_btn"><span>01</span></li>
-                                                            <li className="num_sorting_btn"><span>02</span></li>
-                                                            <li className="num_sorting_btn"><span>03</span></li>
-                                                            <li className="num_sorting_btn"><span>04</span></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                                <span className="showing_results">Showing 1–3 of 12 results</span>
+                                               
                                                 <div className="pages d-flex flex-row align-items-center">
                                                     <div className="page_current">
                                                         <span>1</span>
@@ -124,7 +199,6 @@ class ProductList extends PureComponent {
                                                         </ul>
                                                     </div>
                                                     <div className="page_total"><span>of</span> 3</div>
-                                                    <div id="next_page_1" className="page_next"><a href="#"><i className="fa fa-long-arrow-right" aria-hidden="true" /></a></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +208,6 @@ class ProductList extends PureComponent {
                         </div>
                     </div>
                 </div>
-                {/* Benefit */}
                 <div className="benefit">
                     <div className="container">
                         <div className="row benefit_row">
