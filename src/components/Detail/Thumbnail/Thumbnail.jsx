@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 class Thumbnail extends PureComponent {
     render() {
@@ -10,8 +9,5 @@ class Thumbnail extends PureComponent {
     }
 }
 
-Thumbnail.propTypes = {
-
-};
 
 export default Thumbnail;

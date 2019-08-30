@@ -1,12 +1,11 @@
+import React, { PureComponent } from 'react';
 import "./css/single_styles.css";
 import "./css/single_responsive.css";
 import "./js/single_custom.js";
-import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
+import { bindActionCreators } from 'redux';
 import productApi from './../../../api/productApi';
 import Thumbnail from './../Thumbnail/Thumbnail';
-import { bindActionCreators } from "C:/Users/Minh/AppData/Local/Microsoft/TypeScript/3.5/node_modules/redux";
 import { addToCart } from './../../../actions/cartAction';
 import { connect } from 'react-redux';
 
