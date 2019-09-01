@@ -3,100 +3,116 @@ import './css/categories_styles.css';
 import './css/categories_responsive.css';
 import productApi from './../../../api/productApi';
 import Product from '../Product/Product';
-import { async } from 'q';
+import Pagination from '../Pagination/Pagination';
 
 class ProductList extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            productList:[],
-            order:{
-                orderName:'Default Sorting',
-                orderSort:''
+            productList: [],
+            order: {
+                orderName: 'Default Sorting',
+                orderSort: ''
             },
-            skip:0,
-            limit:4,
+            skip: 0,
+            limit: 8,
+            currentPage: 1,
+            totalPages: 1,
         }
     }
 
     async componentDidMount() {
 
-        const product = await productApi.getAll();
-        this.setState({
-            productList: product.body,
-        })
-    }
-
-    renderProductList=()=>{
-        const {productList} =this.state;
-        if (productList.length>0)
-        {
-            return productList.map((product)=>{
-                return <Product key={product.id} product={product} />
-            });
-        }
-        else{
-            return (<h3>Loading ...</h3>);
-        }
-    }
-    showProduct= async (limitNumber)=>{
-       
-        
         try {
-            const { order, skip } = this.state;
-
+            const { limit, order } = this.state;
             const filter = {
-                limit: limitNumber,
-                skip,
+                limit,
                 order: order.orderSort,
             };
             const params = {
                 filter: JSON.stringify(filter),
             };
-            const product = await productApi.getAll(params);
-            console.log(product);
-            
+            const { body, pagination } = await productApi.getAll(params);
+            const totalPages = Math.ceil(pagination.total / limit);
+
             this.setState({
-                productList: product.body,
-                limit: limitNumber
+                productList: body,
+                totalPages,
             })
         } catch (error) {
-            
+
+        }
+
+    }
+
+    renderProductList = () => {
+        const { productList } = this.state;
+        if (productList.length > 0) {
+            return productList.map((product) => {
+                return <Product key={product.id} product={product} />
+            });
+        }
+        else {
+            return (<h3>Loading ...</h3>);
         }
     }
+
+    showProduct = async (limitNumber) => {
+        try {
+            const { order } = this.state;
+
+            const filter = {
+                limit: limitNumber,
+                order: order.orderSort,
+            };
+            const params = {
+                filter: JSON.stringify(filter),
+            };
+            const { body, pagination} = await productApi.getAll(params);
+            const totalPages = Math.ceil(pagination.total / limitNumber);
+            this.setState({
+                productList: body,
+                limit: limitNumber,
+                totalPages,
+                currentPage:1,
+            })
+        } catch (error) {
+
+        }
+    }
+
     handleChangeOption = async (chooseOption) => {
         try {
             let orderSort;
             switch (chooseOption) {
                 case "Price From Low To High":
-                    orderSort ='salePrice desc';
+                    orderSort = 'salePrice desc';
                     break;
                 case "Price From High To Low":
                     orderSort = 'salePrice asc';
                     break;
                 case "Name From A To Z":
-                    orderSort ='name desc';
+                    orderSort = 'name desc';
                     break;
                 case "Name From Z To A":
                     orderSort = 'name asc';
                     break;
-            
+
                 default:
                     orderSort = '';
                     break;
             }
-            const {skip, limit } = this.state;
-            
+            const {limit } = this.state;
+
             const filter = {
                 limit,
-                skip,
                 order: orderSort,
             };
             const params = {
                 filter: JSON.stringify(filter),
             };
-            const product = await productApi.getAll(params);
-            
+            const {body, pagination} = await productApi.getAll(params);
+            const totalPages = Math.ceil(pagination.total / limit);
             this.setState(prevState => {
                 const newOrder = {
                     ...prevState.order,
@@ -105,20 +121,63 @@ class ProductList extends PureComponent {
                 }
                 return {
                     order: newOrder,
-                    productList: product.body,
+                    productList: body,
+                    currentPage: 1,
+                    totalPages,
+
                 }
             })
-            
+
         } catch (error) {
-            
+
         }
-        
+
     }
 
+    renderPagination = () => {
+        const { totalPages, currentPage } = this.state;
+
+        return (
+            <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                choosePage={this.choosePage}
+            ></Pagination>
+        );
+
+    }
+
+    choosePage = async (page) => {
+        try {
+            // console.log("currentPage", page);
+            const { limit, order } = this.state;
+            const skip = (page - 1) * limit;
+            const filter = {
+                limit,
+                order: order.orderSort,
+                skip,
+            };
+            const params = {
+                filter: JSON.stringify(filter),
+            };
+            const { body, pagination } = await productApi.getAll(params);
+            console.log("body", body);
+            console.log("pagination", pagination);
+
+            this.setState(prevState => {
+                return {
+                    currentPage: page,
+                    productList: body
+                }
+            });
+        } catch (error) {
+
+        }
+    }
 
     render() {
-        const { order,limit }=this.state;
-        
+        const { order, limit, totalPages } = this.state;
+
         return (
             <div>
                 <div className="container product_section_container">
@@ -149,11 +208,11 @@ class ProductList extends PureComponent {
                                         <div className="col">
                                             <div className="product_sorting_container product_sorting_container_top">
                                                 <ul className="product_sorting">
-                                                    <li style={{width:"200px"}}>
+                                                    <li style={{ width: "200px" }}>
                                                         <span className="type_sorting_text">{order.orderName}</span>
                                                         <i className="fa fa-angle-down" />
                                                         <ul className="sorting_type">
-                                                            <li className="type_sorting_btn" onClick={() =>this.handleChangeOption('Default Sorting')}><span>Default Sorting</span></li>
+                                                            <li className="type_sorting_btn" onClick={() => this.handleChangeOption('Default Sorting')}><span>Default Sorting</span></li>
                                                             <li className="type_sorting_btn" onClick={() => this.handleChangeOption('Price From Low To High')}><span>Price From Low To High</span></li>
                                                             <li className="type_sorting_btn" onClick={() => this.handleChangeOption('Price From High To Low')}><span>Price From High To Low</span></li>
                                                             <li className="type_sorting_btn" onClick={() => this.handleChangeOption('Name From A To Z')}><span>Name From A To Z</span></li>
@@ -172,35 +231,14 @@ class ProductList extends PureComponent {
                                                     </li>
                                                 </ul>
                                                 <div className="pages d-flex flex-row align-items-center">
-                                                    <div className="page_current">
-                                                        <span>1</span>
-                                                        <ul className="page_selection">
-                                                            <li><a href="#">1</a></li>
-                                                            <li><a href="#">2</a></li>
-                                                            <li><a href="#">3</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="page_total"><span>of</span> 3</div>
-                                                    
+                                                    {this.renderPagination()}
+                                                    <div className="page_total"><span>of</span> {totalPages} </div>
                                                 </div>
                                             </div>
                                             <div className="product-grid">
                                                 {this.renderProductList()}
                                             </div>
-                                            <div className="product_sorting_container product_sorting_container_bottom clearfix">
-                                               
-                                                <div className="pages d-flex flex-row align-items-center">
-                                                    <div className="page_current">
-                                                        <span>1</span>
-                                                        <ul className="page_selection">
-                                                            <li><a href="#">1</a></li>
-                                                            <li><a href="#">2</a></li>
-                                                            <li><a href="#">3</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="page_total"><span>of</span> 3</div>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
