@@ -4,6 +4,7 @@ import './css/categories_responsive.css';
 import productApi from './../../../api/productApi';
 import Product from '../Product/Product';
 import Pagination from '../Pagination/Pagination';
+import qs from 'query-string';
 
 class ProductList extends PureComponent {
     constructor(props) {
@@ -19,26 +20,52 @@ class ProductList extends PureComponent {
             currentPage: 1,
             totalPages: 1,
         }
+       
+        
     }
 
     async componentDidMount() {
 
         try {
-            const { limit, order } = this.state;
-            const filter = {
-                limit,
-                order: order.orderSort,
-            };
-            const params = {
-                filter: JSON.stringify(filter),
-            };
-            const { body, pagination } = await productApi.getAll(params);
-            const totalPages = Math.ceil(pagination.total / limit);
 
-            this.setState({
-                productList: body,
-                totalPages,
-            })
+            const { location}=this.props;
+            const queryParams=qs.parse(location.search);
+
+            if (Object.keys(queryParams).length !== 0)
+            {
+                
+                const params = {
+                    filter: JSON.stringify(queryParams),
+                };
+                
+                const { body, pagination } = await productApi.getAll(params);
+                
+                const totalPages = Math.ceil(pagination.total / pagination.limit);
+
+                this.setState({
+                    productList: body,
+                    totalPages,
+                })
+            }
+            else{
+
+                const { limit, order } = this.state;
+                const filter = {
+                    limit,
+                    order: order.orderSort,
+                };
+                const params = {
+                    filter: JSON.stringify(filter),
+                };
+                const { body, pagination } = await productApi.getAll(params);
+                const totalPages = Math.ceil(pagination.total / limit);
+
+                this.setState({
+                    productList: body,
+                    totalPages,
+                })
+            }
+
         } catch (error) {
 
         }
@@ -57,24 +84,47 @@ class ProductList extends PureComponent {
         }
     }
 
+    renderPagination = () => {
+        const { totalPages, currentPage } = this.state;
+
+        return (
+            <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                choosePage={this.choosePage}
+            ></Pagination>
+        );
+
+    }
+
     showProduct = async (limitNumber) => {
         try {
+            const { history } = this.props;
+
             const { order } = this.state;
 
             const filter = {
                 limit: limitNumber,
                 order: order.orderSort,
+                skip: 0
             };
             const params = {
                 filter: JSON.stringify(filter),
             };
-            const { body, pagination} = await productApi.getAll(params);
+            const { body, pagination } = await productApi.getAll(params);
             const totalPages = Math.ceil(pagination.total / limitNumber);
             this.setState({
                 productList: body,
                 limit: limitNumber,
                 totalPages,
-                currentPage:1,
+                currentPage: 1,
+            })
+            const queryParams = {
+                ...filter,
+                page: 1,
+            }
+            history.push({
+                search: qs.stringify(queryParams),
             })
         } catch (error) {
 
@@ -102,16 +152,20 @@ class ProductList extends PureComponent {
                     orderSort = '';
                     break;
             }
-            const {limit } = this.state;
+            
+            const { history} = this.props;
+            
+            const { limit } = this.state;
 
             const filter = {
                 limit,
                 order: orderSort,
+                skip:0
             };
             const params = {
                 filter: JSON.stringify(filter),
             };
-            const {body, pagination} = await productApi.getAll(params);
+            const { body, pagination } = await productApi.getAll(params);
             const totalPages = Math.ceil(pagination.total / limit);
             this.setState(prevState => {
                 const newOrder = {
@@ -127,29 +181,23 @@ class ProductList extends PureComponent {
 
                 }
             })
-
+            const queryParams = {
+                ...filter,
+                page:1,
+            }
+            history.push({
+                search: qs.stringify(queryParams),
+            })
         } catch (error) {
 
         }
 
     }
 
-    renderPagination = () => {
-        const { totalPages, currentPage } = this.state;
-
-        return (
-            <Pagination
-                totalPages={totalPages}
-                currentPage={currentPage}
-                choosePage={this.choosePage}
-            ></Pagination>
-        );
-
-    }
-
     choosePage = async (page) => {
+        
         try {
-            // console.log("currentPage", page);
+            const { history } = this.props;
             const { limit, order } = this.state;
             const skip = (page - 1) * limit;
             const filter = {
@@ -160,9 +208,8 @@ class ProductList extends PureComponent {
             const params = {
                 filter: JSON.stringify(filter),
             };
-            const { body, pagination } = await productApi.getAll(params);
-            console.log("body", body);
-            console.log("pagination", pagination);
+            const { body } = await productApi.getAll(params);
+         
 
             this.setState(prevState => {
                 return {
@@ -170,6 +217,14 @@ class ProductList extends PureComponent {
                     productList: body
                 }
             });
+            const queryParams={
+                ...filter,
+                page,
+            }
+            
+            history.push({
+                search: qs.stringify(queryParams),
+            })
         } catch (error) {
 
         }

@@ -100,8 +100,8 @@ class DetailProduct extends PureComponent {
                         <div className="col">
                             <div className="breadcrumbs d-flex flex-row align-items-center">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li className="active"><a href="#"><i className="fa fa-angle-right" aria-hidden="true" />Single Product</a></li>
+                                    <li><a href="javascript:void(0);">Home</a></li>
+                                    <li className="active"><a href="javascript:void(0);"><i className="fa fa-angle-right" aria-hidden="true" />Single Product</a></li>
                                 </ul>
                             </div>
                         </div>
