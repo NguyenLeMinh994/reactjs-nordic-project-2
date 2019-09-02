@@ -1,10 +1,13 @@
 import React, { PureComponent } from 'react';
-import './css/categories_styles.css';
 import './css/categories_responsive.css';
+import './css/categories_styles.css';
 import productApi from './../../../api/productApi';
 import Product from '../Product/Product';
 import Pagination from '../Pagination/Pagination';
 import qs from 'query-string';
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css'
+
 
 class ProductList extends PureComponent {
     constructor(props) {
@@ -19,6 +22,10 @@ class ProductList extends PureComponent {
             limit: 8,
             currentPage: 1,
             totalPages: 1,
+            rangePrice:{
+                min:0,
+                max:100
+            },
         }
        
         
@@ -229,9 +236,22 @@ class ProductList extends PureComponent {
 
         }
     }
+    handleRangePrice=(value)=>{
+        this.setState(prevState=>{
+            console.log(prevState.rangePrice);
+            
+            const newRangePrice={
+                ...value
+            }
+            return{
+                rangePrice: newRangePrice,  
+            }
+        })
+        
+    }
 
     render() {
-        const { order, limit, totalPages } = this.state;
+        const { order, limit, totalPages, rangePrice } = this.state;
 
         return (
             <div>
@@ -250,10 +270,21 @@ class ProductList extends PureComponent {
                                     <div className="sidebar_title">
                                         <h5>Filter by Price</h5>
                                     </div>
-                                    <p>
-                                        <input type="text" id="amount" readOnly style={{ border: 0, color: '#f6931f', fontWeight: 'bold' }} />
-                                    </p>
-                                    <div id="slider-range" />
+                                    <div id="amount">
+                                        ${rangePrice.min} - ${rangePrice.max}
+                                    </div>
+                                    <div id="slider-range" style={{marginTop:"20px"}}>
+                                        <InputRange
+                                            maxValue={1000}
+                                            minValue={0}
+                                            formatLabel={value => `$ ${value}`}
+                                            value={rangePrice}
+                                            onChange={(value) => this.handleRangePrice(value)}
+                                        />
+                                    </div>
+                                           
+                                        
+                                        
                                     <div className="filter_button"><span>filter</span></div>
                                 </div>
                             </div>
