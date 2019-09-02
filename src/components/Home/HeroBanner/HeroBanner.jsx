@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 class HeroBanner extends PureComponent {
     render() {
@@ -12,7 +11,7 @@ class HeroBanner extends PureComponent {
                                 <div className="main_slider_content">
                                     <h6>Spring / Summer Collection 2017</h6>
                                     <h1>Get up to 30% Off New Arrivals</h1>
-                                    <div className="red_button shop_now_button"><a href="#">shop now</a></div>
+                                    <div className="red_button shop_now_button"><a href="/">shop now</a></div>
                                 </div>
                             </div>
                         </div>
@@ -24,7 +23,7 @@ class HeroBanner extends PureComponent {
                             <div className="col-md-4">
                                 <div className="banner_item align-items-center" style={{ backgroundImage: 'url(vendor/images/banner_1.jpg)' }}>
                                     <div className="banner_category">
-                                        <a href="categories.html">women's</a>
+                                        <a href="/">women's</a>
                                     </div>
                                 </div>
                             </div>
@@ -53,8 +52,6 @@ class HeroBanner extends PureComponent {
     }
 }
 
-HeroBanner.propTypes = {
 
-};
 
 export default HeroBanner;

@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import Category from './../Category/Category';
 import categoryApi from '../../../api/categoryApi';
 import productApi from './../../../api/productApi';
@@ -125,8 +124,5 @@ class NewArrival extends PureComponent {
     }
 }
 
-NewArrival.propTypes = {
-
-};
 
 export default NewArrival;

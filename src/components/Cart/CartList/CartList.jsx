@@ -63,7 +63,7 @@ class CartList extends PureComponent {
                         <div className="card-footer">
 
                             <div className="pull-right" style={{ margin: '10px' }}>
-                                <a className="btn btn-success pull-right" style={{ background: '#fe6164', borderColor: '#fe6164', color: '#fff' }}>Checkout</a>
+                                <a href="/" className="btn btn-success pull-right" style={{ background: '#fe6164', borderColor: '#fe6164', color: '#fff' }}>Checkout</a>
                                 <div className="pull-right" style={{ margin: '5px' }}>
                                     Total price: <b>${this.totalPrice()}</b>
                                 </div>

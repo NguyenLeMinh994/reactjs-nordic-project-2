@@ -6,7 +6,7 @@ class Pagination extends PureComponent {
         const { totalPages, choosePage}=this.props;
         const pageElements=[];
         for (let index = 1; index <= totalPages; index++) {
-            pageElements.push(<li key={index}><a onClick={() => choosePage(index)}>{index}</a></li>);
+            pageElements.push(<li key={index}><a href="#!" onClick={() => choosePage(index)}>{index}</a></li>);
             
         }
         return pageElements;

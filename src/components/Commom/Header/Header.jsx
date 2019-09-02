@@ -1,12 +1,9 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import {Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 class Header extends PureComponent {
-    constructor(props) {
-        super(props);
-    }
+  
 
     renderQtyInCart = () => {
         const {
@@ -35,25 +32,25 @@ class Header extends PureComponent {
                                     <div className="top_nav_right">
                                         <ul className="top_nav_menu">
                                             <li className="language">
-                                                <a href="#">
+                                                <a href="#!">
                                                     English
-                        <i className="fa fa-angle-down" />
+                                                <i className="fa fa-angle-down" />
                                                 </a>
                                                 <ul className="language_selection">
-                                                    <li><a href="#">French</a></li>
-                                                    <li><a href="#">Italian</a></li>
-                                                    <li><a href="#">German</a></li>
-                                                    <li><a href="#">Spanish</a></li>
+                                                    <li><a href="#!">French</a></li>
+                                                    <li><a href="#!">Italian</a></li>
+                                                    <li><a href="#!">German</a></li>
+                                                    <li><a href="#!">Spanish</a></li>
                                                 </ul>
                                             </li>
                                             <li className="account">
-                                                <a href="#">
+                                                <a href="/">
                                                     My Account
-                        <i className="fa fa-angle-down" />
+                                                    <i className="fa fa-angle-down" />
                                                 </a>
                                                 <ul className="account_selection">
-                                                    <li><a href="#"><i className="fa fa-sign-in" aria-hidden="true" />Sign In</a></li>
-                                                    <li><a href="#"><i className="fa fa-user-plus" aria-hidden="true" />Register</a></li>
+                                                    <li><a href="/"><i className="fa fa-sign-in" aria-hidden="true" />Sign In</a></li>
+                                                    <li><a href="/"><i className="fa fa-user-plus" aria-hidden="true" />Register</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -78,10 +75,9 @@ class Header extends PureComponent {
                                             <li><Link to="/cart">Cart</Link></li>
                                         </ul>
                                         <ul className="navbar_user">
-                                            {/* <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li> */}
-                                            {/* <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li> */}
+                                            
                                             <li className="checkout">
-                                                <a href="#">
+                                                <a href="#!">
                                                     <i className="fa fa-shopping-cart" aria-hidden="true" />
                                                     <span id="checkout_items" className="checkout_items">
                                                     {this.renderQtyInCart()}
@@ -105,45 +101,31 @@ class Header extends PureComponent {
                     <div className="hamburger_menu_content text-right">
                         <ul className="menu_top_nav">
                             <li className="menu_item has-children">
-                                <a href="#">
+                                <a href="#!">
                                     usd
                   <i className="fa fa-angle-down" />
                                 </a>
                                 <ul className="menu_selection">
-                                    <li><a href="#">cad</a></li>
-                                    <li><a href="#">aud</a></li>
-                                    <li><a href="#">eur</a></li>
-                                    <li><a href="#">gbp</a></li>
+                                    <li><a href="#!">cad</a></li>
+                                    <li><a href="#!">aud</a></li>
+                                    <li><a href="#!">eur</a></li>
+                                    <li><a href="#!">gbp</a></li>
                                 </ul>
                             </li>
                             <li className="menu_item has-children">
-                                <a href="#">
+                                <a href="#!">
                                     English
-                  <i className="fa fa-angle-down" />
+                                <i className="fa fa-angle-down" />
                                 </a>
                                 <ul className="menu_selection">
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">Italian</a></li>
-                                    <li><a href="#">German</a></li>
-                                    <li><a href="#">Spanish</a></li>
+                                    <li><a href="#!">French</a></li>
+                                    <li><a href="#!">Italian</a></li>
+                                    <li><a href="#!">German</a></li>
+                                    <li><a href="#!">Spanish</a></li>
                                 </ul>
                             </li>
-                            <li className="menu_item has-children">
-                                <a href="#">
-                                    My Account
-                  <i className="fa fa-angle-down" />
-                                </a>
-                                <ul className="menu_selection">
-                                    <li><a href="#"><i className="fa fa-sign-in" aria-hidden="true" />Sign In</a></li>
-                                    <li><a href="#"><i className="fa fa-user-plus" aria-hidden="true" />Register</a></li>
-                                </ul>
-                            </li>
-                            <li className="menu_item"><a href="#">home</a></li>
-                            <li className="menu_item"><a href="categories.html">shop</a></li>
-                            <li className="menu_item"><a href="#">promotion</a></li>
-                            <li className="menu_item"><a href="#">pages</a></li>
-                            <li className="menu_item"><a href="https://nordiccoder.com/blog" target="blank">blog</a></li>
-                            <li className="menu_item"><a href="#">contact</a></li>
+                            
+                           
                         </ul>
                     </div>
                 </div>
@@ -154,9 +136,7 @@ class Header extends PureComponent {
     }
 }
 
-Header.propTypes = {
 
-};
 
 const mapStateToProps = state => {
     return {

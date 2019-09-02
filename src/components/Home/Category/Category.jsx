@@ -1,13 +1,6 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 class Category extends PureComponent {
-    constructor(props) {
-        super(props);
-
-    };
-
-
 
     render() {
         const { category, statusCategory, handleCategory } = this.props;
@@ -19,12 +12,6 @@ class Category extends PureComponent {
         );
     }
 }
-
-Category.propTypes = {
-
-};
-
-
 
 
 export default Category;

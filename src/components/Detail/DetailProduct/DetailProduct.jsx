@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import "./css/single_styles.css";
 import "./css/single_responsive.css";
-import "./js/single_custom.js";
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import productApi from './../../../api/productApi';
@@ -100,8 +99,7 @@ class DetailProduct extends PureComponent {
                         <div className="col">
                             <div className="breadcrumbs d-flex flex-row align-items-center">
                                 <ul>
-                                    <li><a href="javascript:void(0);">Home</a></li>
-                                    <li className="active"><a href="javascript:void(0);"><i className="fa fa-angle-right" aria-hidden="true" />Single Product</a></li>
+                                    <li><a href="/">Home</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -144,7 +142,7 @@ class DetailProduct extends PureComponent {
                                     <span className="plus" onClick={this.handleIncrease}><i className="fa fa-plus" aria-hidden="true" /></span>
                                 </div>
                                 <div className="red_button"
-                                    style={{ width: '160px', marginLeft: '13px', fontSize: '12px' }}><a href="#" onClick={
+                                    style={{ width: '160px', marginLeft: '13px', fontSize: '12px' }}><a href="/" onClick={
                                         (e) => this.onAddToCart(product, e)
                                     }>add to cart</a></div>
                                 <div className="product_favorite d-flex flex-column align-items-center justify-content-center" />

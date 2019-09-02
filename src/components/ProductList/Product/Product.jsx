@@ -26,7 +26,7 @@ class Product extends PureComponent {
                 </div>
                 <div className="red_button add_to_cart_button"
                 style={{ margin: '0' }}>
-                    <a onClick={() => this.onAddToCart(product)}
+                    <a href="/" onClick={() => this.onAddToCart(product)}
                 >add to cart</a></div>
             </div>
 
