@@ -7,7 +7,8 @@ import { addToCart } from './../../../actions/cartAction';
 
 class Product extends PureComponent {
 
-    onAddToCart=(product)=>{
+    onAddToCart=(e,product)=>{
+        e.preventDefault();
         this.props.addToCart(product,1);
     }
     render() {
@@ -26,7 +27,7 @@ class Product extends PureComponent {
                 </div>
                 <div className="red_button add_to_cart_button"
                 style={{ margin: '0' }}>
-                    <a href="/" onClick={() => this.onAddToCart(product)}
+                    <a href="#!" onClick={(e) => this.onAddToCart(e,product)}
                 >add to cart</a></div>
             </div>
 

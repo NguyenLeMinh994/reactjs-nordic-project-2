@@ -69,20 +69,18 @@ class Header extends PureComponent {
                                     </div>
                                     <nav className="navbar">
                                         <ul className="navbar_menu">
-
-                                            <li><Link to="/">home</Link></li>
+                                            <li><Link to="/">Home</Link></li>
                                             <li><Link to="/shop">Shop</Link></li>
-                                            <li><Link to="/cart">Cart</Link></li>
                                         </ul>
                                         <ul className="navbar_user">
                                             
                                             <li className="checkout">
-                                                <a href="#!">
+                                                <Link to="/cart">
                                                     <i className="fa fa-shopping-cart" aria-hidden="true" />
                                                     <span id="checkout_items" className="checkout_items">
                                                     {this.renderQtyInCart()}
                                                     </span>
-                                                </a>
+                                                </Link>
                                             </li>
                                         </ul>
                                         <div className="hamburger_container">
