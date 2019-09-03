@@ -22,39 +22,67 @@ class ProductList extends PureComponent {
             limit: 8,
             currentPage: 1,
             totalPages: 1,
-            rangePrice:{
-                min:0,
-                max:100
+            rangePrice: {
+                min: 0,
+                max: 100
             },
         }
-       
-        
+
+
     }
 
     async componentDidMount() {
 
         try {
 
-            const { location}=this.props;
-            const queryParams=qs.parse(location.search);
+            const { location } = this.props;
+            const queryParams = qs.parse(location.search);
 
-            if (Object.keys(queryParams).length !== 0)
-            {
-                
+            if (Object.keys(queryParams).length !== 0) {
+
+                let newFilter = {
+                    limit: +queryParams.limit,
+                    order: queryParams.order,
+                    page: queryParams.page ? +queryParams.page : 1,
+                    skip: queryParams.skip ? +queryParams.skip : 0,
+                }
+
+                if (newFilter.min && newFilter.max) {
+                    delete newFilter.min;
+                    delete newFilter.max;
+                    newFilter = {
+                        ...newFilter,
+                        where: {
+                            salePrice: {
+                                between: [+queryParams.min, +queryParams.max]
+                            },
+                        }
+                    };
+                }
                 const params = {
-                    filter: JSON.stringify(queryParams),
+                    filter: JSON.stringify(newFilter),
                 };
-                
+
                 const { body, pagination } = await productApi.getAll(params);
-                
+
                 const totalPages = Math.ceil(pagination.total / pagination.limit);
 
-                this.setState({
-                    productList: body,
-                    totalPages,
-                })
+                this.setState(prevState => {
+                    const newOrder={
+                        ...prevState.order,
+                        orderSort:queryParams.order
+                    }
+                    return {
+                        productList: body,
+                        totalPages,
+                        limit: +queryParams.limit,
+                        order: newOrder,
+                        currentPage: queryParams.page ? +queryParams.page : 1,
+                        skip: queryParams.skip ? +queryParams.skip : 0,
+                    }
+                });
             }
-            else{
+            else {
 
                 const { limit, order } = this.state;
                 const filter = {
@@ -106,20 +134,42 @@ class ProductList extends PureComponent {
 
     showProduct = async (limitNumber) => {
         try {
-            const { history } = this.props;
-
+            const { history, location } = this.props;
+            const p = qs.parse(location.search);
             const { order } = this.state;
 
-            const filter = {
+
+            let filter = {
                 limit: limitNumber,
                 order: order.orderSort,
-                skip: 0
+
             };
+
+            let rangePrice = null;
+            if (p.min && p.max) {
+                filter = {
+                    ...filter,
+                    where: {
+                        salePrice: {
+                            between: [+p.min, +p.max]
+                        },
+                    }
+                }
+                rangePrice = {
+                    min: +p.min,
+                    max: +p.max
+                }
+            }
+
             const params = {
                 filter: JSON.stringify(filter),
             };
+
+
             const { body, pagination } = await productApi.getAll(params);
             const totalPages = Math.ceil(pagination.total / limitNumber);
+
+
             this.setState({
                 productList: body,
                 limit: limitNumber,
@@ -127,8 +177,10 @@ class ProductList extends PureComponent {
                 currentPage: 1,
             })
             const queryParams = {
-                ...filter,
+                limit: limitNumber,
+                order: order.orderSort,
                 page: 1,
+                ...rangePrice
             }
             history.push({
                 search: qs.stringify(queryParams),
@@ -159,16 +211,34 @@ class ProductList extends PureComponent {
                     orderSort = '';
                     break;
             }
-            
-            const { history} = this.props;
-            
+
+            const { history, location } = this.props;
+            const p = qs.parse(location.search);
+
             const { limit } = this.state;
 
-            const filter = {
+            let filter = {
                 limit,
                 order: orderSort,
-                skip:0
+                skip: 0
             };
+
+            let rangePrice = null;
+            if (p.min && p.max) {
+                filter = {
+                    ...filter,
+                    where: {
+                        salePrice: {
+                            between: [+p.min, +p.max]
+                        },
+                    }
+                }
+                rangePrice = {
+                    min: +p.min,
+                    max: +p.max
+                }
+            }
+
             const params = {
                 filter: JSON.stringify(filter),
             };
@@ -189,8 +259,11 @@ class ProductList extends PureComponent {
                 }
             })
             const queryParams = {
-                ...filter,
-                page:1,
+                limit,
+                order: orderSort,
+                skip: 0,
+                page: 1,
+                ...rangePrice,
             }
             history.push({
                 search: qs.stringify(queryParams),
@@ -202,21 +275,40 @@ class ProductList extends PureComponent {
     }
 
     choosePage = async (page) => {
-        
+
         try {
-            const { history } = this.props;
+            const { history, location } = this.props;
+            const p = qs.parse(location.search);
             const { limit, order } = this.state;
             const skip = (page - 1) * limit;
-            const filter = {
+            let filter = {
+                skip,
                 limit,
                 order: order.orderSort,
-                skip,
+
             };
+            let rangePrice = null;
+            if (p.min && p.max) {
+                filter = {
+                    ...filter,
+                    where: {
+                        salePrice: {
+                            between: [+p.min, +p.max]
+                        },
+                    }
+                }
+                rangePrice = {
+                    min: +p.min,
+                    max: +p.max
+                }
+            }
+
+
             const params = {
                 filter: JSON.stringify(filter),
             };
+
             const { body } = await productApi.getAll(params);
-         
 
             this.setState(prevState => {
                 return {
@@ -224,11 +316,14 @@ class ProductList extends PureComponent {
                     productList: body
                 }
             });
-            const queryParams={
-                ...filter,
+            const queryParams = {
+                limit,
+                order: order.orderSort,
+                skip,
                 page,
+                ...rangePrice,
             }
-            
+
             history.push({
                 search: qs.stringify(queryParams),
             })
@@ -236,19 +331,45 @@ class ProductList extends PureComponent {
 
         }
     }
-    handleRangePrice=(value)=>{
-        this.setState(prevState=>{
-            console.log(prevState.rangePrice);
-            
-            const newRangePrice={
-                ...value
+
+    handleRangePrice = async () => {
+        const { history } = this.props;
+        const { limit, order, rangePrice } = this.state;
+        const filter = {
+            limit,
+            order: order.orderSort,
+            where: {
+                salePrice: {
+                    between: [rangePrice.min, rangePrice.max]
+                },
             }
-            return{
-                rangePrice: newRangePrice,  
-            }
+        };
+        const params = {
+            filter: JSON.stringify(filter),
+        };
+
+        const { body, pagination } = await productApi.getAll(params);
+        const totalPages = Math.ceil(pagination.total / limit);
+
+        this.setState({
+            productList: body,
+            currentPage: 1,
+            totalPages,
         })
-        
+        const queryParams = {
+            limit,
+            order: order.orderSort,
+            page: 1,
+            min: rangePrice.min,
+            max: rangePrice.max
+        }
+
+        history.push({
+            search: qs.stringify(queryParams),
+        })
+
     }
+
 
     render() {
         const { order, limit, totalPages, rangePrice } = this.state;
@@ -273,19 +394,19 @@ class ProductList extends PureComponent {
                                     <div id="amount">
                                         ${rangePrice.min} - ${rangePrice.max}
                                     </div>
-                                    <div id="slider-range" style={{marginTop:"20px"}}>
+                                    <div id="slider-range" style={{ marginTop: "20px" }}>
                                         <InputRange
                                             maxValue={1000}
                                             minValue={0}
                                             formatLabel={value => `$ ${value}`}
                                             value={rangePrice}
-                                            onChange={(value) => this.handleRangePrice(value)}
+                                            onChange={(value) => this.setState({ rangePrice: value })}
                                         />
                                     </div>
-                                           
-                                        
-                                        
-                                    <div className="filter_button"><span>filter</span></div>
+
+
+
+                                    <div className="filter_button" onClick={this.handleRangePrice}><span>filter</span></div>
                                 </div>
                             </div>
                             <div className="main_content">
