@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
-
 class DealOfTheWeek extends PureComponent {
     render() {
         return (

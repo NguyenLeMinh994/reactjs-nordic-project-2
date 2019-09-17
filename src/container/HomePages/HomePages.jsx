@@ -11,7 +11,6 @@ class HomePages extends PureComponent {
                 <HeroBanner></HeroBanner>
                 <NewArrival></NewArrival>
                 <DealOfTheWeek></DealOfTheWeek>
-
             </div>
         );
     }

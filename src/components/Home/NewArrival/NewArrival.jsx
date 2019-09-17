@@ -23,7 +23,6 @@ class NewArrival extends PureComponent {
 
             categoryItems.unshift({ id: '0', name: 'All' })
             const products = await productApi.getAll();
-            // console.log("Product 1", products.body);
 
             this.setState(prevState => {
                 return {
